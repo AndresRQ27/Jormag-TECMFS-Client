@@ -26,11 +26,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    upload.cpp
+    upload.cpp \
+    tcp_client.cpp
 
 HEADERS += \
         mainwindow.h \
-    upload.h
+    upload.h \
+    json.hpp \
+    tcp_client.h
 
 FORMS += \
         mainwindow.ui

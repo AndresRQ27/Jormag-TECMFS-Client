@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "tcp_client.h"
+#include "upload.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,8 +20,13 @@ public:
 private slots:
     void on_uploadButton_clicked();
 
+    void on_searchButton_clicked();
+
+    void on_backButton_clicked();
+
 private:
     Ui::MainWindow *ui;
+    tcp_client client;
 };
 
 #endif // MAINWINDOW_H
