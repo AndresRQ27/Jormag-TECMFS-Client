@@ -16,7 +16,7 @@ class Upload
 public:
     Upload();
 
-    static void SendFiles(QStringList videoList, QStringList jsonList,
+    static void SendFiles(QStringList jsonList,
                           tcp_client client);
 
 };

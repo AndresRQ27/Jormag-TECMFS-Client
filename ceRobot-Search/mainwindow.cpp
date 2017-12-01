@@ -29,32 +29,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_uploadButton_clicked()
 {
-    QStringList jsonList, videoList;
-
-
+    QStringList videoList;
     videoList = QFileDialog::getOpenFileNames(
                             this,
                             "Select one or more videos to upload",
                             "/home",
                             "(*.mp4)");
 
-    while (true){
-        jsonList = QFileDialog::getOpenFileNames(
-                    this,
-                    "Select the corresponding json files to upload",
-                    "/home",
-                    "(*.json)");
-
-        if (videoList.length() != jsonList.length()){
-            ui->status->setText("Status: Error uploading");
-            qDebug() << "The number of json selected don't match the number of videos uploaded";
-        } else {
-            break;
-        }
-    }
-
     try {
-        Upload::SendFiles(videoList, jsonList, this->client);
+        Upload::SendFiles(videoList, this->client);
     } catch (std::system_error &e) {
         ui->status->setText(e.what());
     }
@@ -121,14 +104,14 @@ void MainWindow::on_pushSearchButton_clicked()
 void MainWindow::on_pushChooseButton_clicked()
 {
     string video;
-    json commandJSON, requestJSON;
+    json commandJSON, videoJSON;
     string text = ui->chooseComboBox->currentText().toUtf8().constData();
 
     if(text.size() != 0){
         commandJSON["command"] = "v";
-        requestJSON["name"] = text;
+        commandJSON["title"] = text;
         client.send_data(commandJSON.dump().c_str());
-        client.send_data(requestJSON.dump().c_str());
         video = client.receive();
+        videoJSON = json::parse(video);
     }
 }
