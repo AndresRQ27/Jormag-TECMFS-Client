@@ -22,7 +22,7 @@ enum command{init,new_,get};
 class tcp_client
 {
 private:
-    int sock;
+    int sock, connFd;
     std::string address;
     int port;
     struct sockaddr_in server;

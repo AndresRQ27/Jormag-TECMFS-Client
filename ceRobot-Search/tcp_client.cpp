@@ -70,7 +70,8 @@ bool tcp_client::conn(std::string address , int port)
     server.sin_port = htons( port );
 
     //Connect to remote server
-    if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0)
+    connFd = connect(sock , (struct sockaddr *)&server , sizeof(server));
+    if (connFd < 0)
     {
         perror("connect failed. Error");
         return 1;
@@ -91,7 +92,7 @@ bool tcp_client::send_data(const char* data)
         perror("Send failed : ");
         return false;
     }
-    std::cout<<"Data send\n";
+    std::cout<<"Data send"<<std::endl;
     usleep(200);
     return true;
 }

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include"upload.h"
 #include <QString>
 #include <QFileDialog>
 #include <QDebug>
@@ -11,7 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->status->setText("Status: Hello World");
-    //client.conn("127.168.0.1", 8080);
+    client.conn("192.168.100.10", 8080);
+
+    qDebug() << "connected";
 
     //Hide search elements
     ui->chooseComboBox->hide();

@@ -16,9 +16,7 @@ class Upload
 public:
     Upload();
 
-    static void SendFiles(QStringList jsonList,
-                          tcp_client client);
-
+    static void SendFiles(QStringList jsonList, tcp_client client);
 };
 
 #endif // UPLOAD_H

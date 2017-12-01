@@ -28,14 +28,16 @@ SOURCES += \
         mainwindow.cpp \
     upload.cpp \
     tcp_client.cpp \
-    search.cpp
+    search.cpp \
+    creaJson.cpp
 
 HEADERS += \
         mainwindow.h \
     upload.h \
     json.hpp \
     tcp_client.h \
-    search.h
+    search.h \
+    creaJson.h
 
 FORMS += \
         mainwindow.ui
