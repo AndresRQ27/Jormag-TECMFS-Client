@@ -27,13 +27,15 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     upload.cpp \
-    tcp_client.cpp
+    tcp_client.cpp \
+    search.cpp
 
 HEADERS += \
         mainwindow.h \
     upload.h \
     json.hpp \
-    tcp_client.h
+    tcp_client.h \
+    search.h
 
 FORMS += \
         mainwindow.ui

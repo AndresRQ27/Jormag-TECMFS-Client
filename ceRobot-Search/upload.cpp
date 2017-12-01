@@ -5,14 +5,7 @@
 
 Upload::Upload(){}
 
-Upload::Upload(QStringList videoList, QStringList jsonList, tcp_client client)
-{
-    this->videoList = videoList;
-    this->jsonList = jsonList;
-    this->client = client;
-}
-
-void Upload::SendFiles()
+void Upload::SendFiles(QStringList videoList, QStringList jsonList, tcp_client client)
 {
     string data;
     for(int i = 0; i < jsonList.length(); ++i){
@@ -30,9 +23,8 @@ void Upload::SendFiles()
         myfile.close();
     }
     const char *cstr = data.c_str();
-    client.send_data(cstr);
-}
 
-Upload::~Upload(){
-
+    if(!client.send_data(cstr)){
+        throw std::system_error();
+    }
 }

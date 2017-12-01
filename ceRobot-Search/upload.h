@@ -15,14 +15,10 @@ class Upload
 {
 public:
     Upload();
-    Upload(QStringList videoList, QStringList jsonList, tcp_client client);
-    ~Upload();
 
-    void SendFiles();
+    static void SendFiles(QStringList videoList, QStringList jsonList,
+                          tcp_client client);
 
-private:
-    QStringList videoList, jsonList;
-    tcp_client client;
 };
 
 #endif // UPLOAD_H

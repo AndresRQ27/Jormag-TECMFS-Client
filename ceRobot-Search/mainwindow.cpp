@@ -53,7 +53,11 @@ void MainWindow::on_uploadButton_clicked()
         }
     }
 
-    Upload upload = Upload(videoList, jsonList, this->client);
+    try {
+        Upload::SendFiles(videoList, jsonList, this->client);
+    } catch (std::system_error &e) {
+        ui->status->setText(e.what());
+    }
 }
 
 void MainWindow::on_searchButton_clicked()
@@ -71,8 +75,6 @@ void MainWindow::on_searchButton_clicked()
     ui->textSearch->show();
     ui->pushSearchButton->show();
     ui->backButton->show();
-
-
 }
 
 void MainWindow::on_backButton_clicked()
@@ -84,10 +86,49 @@ void MainWindow::on_backButton_clicked()
     ui->textSearch->hide();
     ui->pushSearchButton->hide();
     ui->backButton->hide();
+    ui->textSearch->clear();
 
     //Show main elements
     ui->title->show();
     ui->status->show();
     ui->searchButton->show();
     ui->uploadButton->show();
+}
+
+void MainWindow::on_pushSearchButton_clicked()
+{
+    QString searchWord = ui->textSearch->toPlainText();
+    std::string str = searchWord.toUtf8().constData();
+
+    list<string> nameList;
+    try{
+        nameList = Search::Receive(this->client);
+    } catch (std::system_error &e) {
+        this->on_backButton_clicked();
+        ui->status->setText(e.what());
+    }
+
+    if(nameList.size() != 0){
+        for (int i = 0; i < nameList.size(); ++i) {
+            if(nameList.front().find(str) != -1){
+                ui->chooseComboBox->addItem(tr(nameList.front().c_str()));
+            }
+            nameList.pop_front();
+        }
+    }
+}
+
+void MainWindow::on_pushChooseButton_clicked()
+{
+    string video;
+    json commandJSON, requestJSON;
+    string text = ui->chooseComboBox->currentText().toUtf8().constData();
+
+    if(text.size() != 0){
+        commandJSON["command"] = "v";
+        requestJSON["name"] = text;
+        client.send_data(commandJSON.dump().c_str());
+        client.send_data(requestJSON.dump().c_str());
+        video = client.receive();
+    }
 }
